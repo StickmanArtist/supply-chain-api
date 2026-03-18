@@ -11,6 +11,7 @@ app.use(express.json());
 app.use('/api/commodities', require('./src/routes/commodities'));
 app.use('/api/news',        require('./src/routes/news'));
 app.use('/api/ai',          require('./src/routes/ai'));
+app.use('/api/prices',      require('./src/routes/prices')); 
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
