@@ -55,25 +55,37 @@ router.get('/:id', async (req, res) => {
   try {
     const interval = range === '1mo' ? '1d' : '1wk';
     const data = await fetchYahoo(ticker, range, interval);
-    const chart = data.chart.result[0];
-    const timestamps = chart.timestamp;
-    const closes = chart.indicators.quote[0].close;
-    const meta = chart.meta;
 
-    const prices = timestamps.map((ts, i) => ({
-      date: new Date(ts * 1000).toISOString().slice(0, 10),
-      price: closes[i] ? parseFloat(closes[i].toFixed(2)) : null,
-    })).filter(p => p.price !== null);
+    console.log('Yahoo 응답:', JSON.stringify(data?.chart?.result?.[0]?.meta).slice(0, 200));
+
+    const result0 = data?.chart?.result?.[0];
+    if (!result0) {
+      return res.json({ available: false, message: '데이터를 찾을 수 없습니다' });
+    }
+
+    const timestamps = result0.timestamp || [];
+    const closes = result0.indicators?.quote?.[0]?.close || [];
+    const meta = result0.meta || {};
+
+    const prices = timestamps
+      .map((ts, i) => ({
+        date: new Date(ts * 1000).toISOString().slice(0, 10),
+        price: closes[i] != null ? parseFloat(closes[i].toFixed(2)) : null,
+      }))
+      .filter(p => p.price !== null);
+
+    const currentPrice = meta.regularMarketPrice ?? meta.previousClose ?? 0;
+    const previousClose = meta.previousClose ?? currentPrice;
 
     const result = {
       available: true,
       ticker,
-      name: meta.shortName || ticker,
-      currency: meta.currency,
-      currentPrice: parseFloat(meta.regularMarketPrice?.toFixed(2)),
-      previousClose: parseFloat(meta.previousClose?.toFixed(2)),
-      change: parseFloat((meta.regularMarketPrice - meta.previousClose).toFixed(2)),
-      changePct: parseFloat(((meta.regularMarketPrice - meta.previousClose) / meta.previousClose * 100).toFixed(2)),
+      name: meta.shortName || meta.symbol || ticker,
+      currency: meta.currency || 'USD',
+      currentPrice: parseFloat(currentPrice.toFixed(2)),
+      previousClose: parseFloat(previousClose.toFixed(2)),
+      change: parseFloat((currentPrice - previousClose).toFixed(2)),
+      changePct: parseFloat(((currentPrice - previousClose) / (previousClose || 1) * 100).toFixed(2)),
       range,
       prices,
     };
