@@ -1,4 +1,23 @@
 require('dotenv').config();
+const EXTRA_COORDS = {
+  'UAE':       { lat: 24,  lng: 54  },
+  '카타르':    { lat: 25,  lng: 51  },
+  '쿠웨이트':  { lat: 29,  lng: 47  },
+  '이스라엘':  { lat: 31,  lng: 35  },
+  '터키':      { lat: 39,  lng: 35  },
+  '태국':      { lat: 15,  lng: 101 },
+  '말레이시아':{ lat: 4,   lng: 109 },
+  '필리핀':    { lat: 13,  lng: 122 },
+  '방글라데시':{ lat: 23,  lng: 90  },
+  '파키스탄':  { lat: 30,  lng: 70  },
+  '스페인':    { lat: 40,  lng: -4  },
+  '네덜란드':  { lat: 52,  lng: 5   },
+  '스웨덴':    { lat: 60,  lng: 18  },
+  '폴란드':    { lat: 52,  lng: 20  },
+  '벨기에':    { lat: 50,  lng: 4   },
+  '노르웨이':  { lat: 62,  lng: 10  },
+  '칠레':      { lat: -30, lng: -71 },
+};
 const { Pool } = require('pg');
 const { ITEMS } = require('./src/data/commodities');
 

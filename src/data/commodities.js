@@ -161,7 +161,6 @@ const ITEMS = [
       exports:[]},
    ],
    companies:["Nestlé","JDE Peet's","Starbucks","JAB Holdings","Strauss Group"]}
-
   ,{id:'soy',cat:'agri',name:'대두',icon:'🫘',unit:'억 톤/년',
    regions:[
      {name:'브라질',lat:-15,lng:-50,prod:1.54,cons:0.55,imports:[],
@@ -182,7 +181,6 @@ const ITEMS = [
       exports:[]},
    ],
    companies:['Cargill','ADM','Bunge','Louis Dreyfus','COFCO']}
-
   ,{id:'car',cat:'mfg',name:'자동차',icon:'🚗',unit:'백만 대/년',
    regions:[
      {name:'중국',lat:35,lng:105,prod:27.0,cons:25.0,imports:[],
@@ -206,20 +204,47 @@ const ITEMS = [
       exports:[]},
    ],
    companies:['Toyota','폭스바겐','현대기아','GM','BYD']}
+  ,{id:'lng',     cat:'raw',  name:'LNG',    icon:'🔥', unit:'백만 톤/년',   regions:[], 
+   companies:['카타르에너지','Shell','BP','TotalEnergies','우드사이드']}
+  ,{id:'copper',  cat:'raw',  name:'구리',   icon:'🟤', unit:'만 톤/년',     regions:[], 
+   companies:['코델코','프리포트맥모란','BHP','글렌코어','앵글로아메리칸']}
+  ,{id:'nickel',  cat:'raw',  name:'니켈',   icon:'⚙️', unit:'만 톤/년',     regions:[], 
+   companies:['노르니켈','발레','글렌코어','BHP','에라멧']}
+  ,{id:'aluminum',cat:'raw',  name:'알루미늄',icon:'🔩', unit:'만 톤/년',    regions:[], 
+   companies:['홍차이그룹','루살','알코아','Rio Tinto','노르스크하이드로']}
+  ,{id:'rubber',  cat:'agri', name:'천연고무',icon:'🌿', unit:'만 톤/년',    regions:[], 
+   companies:['Bridgestone','미쉐린','굿이어','Halcyon','Von Bundit']}
+  ,{id:'cotton',  cat:'agri', name:'면화',   icon:'🌸', unit:'만 톤/년',     regions:[], 
+   companies:['Cargill','루이드레퓌스','Olam','COFCO','Dunavant']}
+  ,{id:'steel',   cat:'mfg',  name:'철강',   icon:'🏗️', unit:'억 톤/년',    regions:[], 
+   companies:['바오우철강','아르셀로미탈','POSCO','닛폰스틸','누코']}
+  ,{id:'fertilizer',cat:'mfg',name:'비료',   icon:'🌱', unit:'만 톤/년',     regions:[], 
+   companies:['야라','모자이크','CF인더스트리','뉴트리엔','ICL그룹']}
 ];
 
 const EXTRA_COORDS = {
-  '캐나다':{lat:56,lng:-96},'멕시코':{lat:23,lng:-102},
-  'UAE':{lat:24,lng:54},'쿠웨이트':{lat:29,lng:47},
-  '노르웨이':{lat:62,lng:10},'스웨덴':{lat:60,lng:18},
-  '에스토니아':{lat:59,lng:25},'우크라이나':{lat:49,lng:32},
-  '루마니아':{lat:45,lng:25},'카자흐스탄':{lat:48,lng:68},
-  '폴란드':{lat:52,lng:20},'헝가리':{lat:47,lng:19},
-  '방글라데시':{lat:23,lng:90},'터키':{lat:39,lng:35},
-  '네덜란드':{lat:52,lng:5},'벨기에':{lat:50,lng:4},
-  '스페인':{lat:40,lng:-4},'홍콩':{lat:22,lng:114},
-  '이탈리아':{lat:42,lng:12},'프랑스':{lat:46,lng:2},
-  '영국':{lat:54,lng:-2},'시리아':{lat:35,lng:38},
-  '아르헨티나':{lat:-34,lng:-64},'콜롬비아':{lat:4,lng:-74},
+  'UAE':      { lat: 24,  lng: 54  },
+  '카타르':   { lat: 25,  lng: 51  },
+  '쿠웨이트': { lat: 29,  lng: 47  },
+  '이스라엘': { lat: 31,  lng: 35  },
+  '터키':     { lat: 39,  lng: 35  },
+  '태국':     { lat: 15,  lng: 101 },
+  '말레이시아':{ lat: 4,  lng: 109 },
+  '필리핀':   { lat: 13,  lng: 122 },
+  '방글라데시':{ lat: 23, lng: 90  },
+  '파키스탄': { lat: 30,  lng: 70  },
+  '스페인':   { lat: 40,  lng: -4  },
+  '네덜란드': { lat: 52,  lng: 5   },
+  '스웨덴':   { lat: 60,  lng: 18  },
+  '폴란드':   { lat: 52,  lng: 20  },
+  '벨기에':   { lat: 50,  lng: 4   },
+  '노르웨이': { lat: 62,  lng: 10  },
+  '칠레':     { lat: -30, lng: -71 },
+  '카자흐스탄':{ lat: 48, lng: 68  },
+  '우크라이나':{ lat: 49, lng: 32  },
+  '에스토니아':{ lat: 59, lng: 25  },
+  '루마니아': { lat: 45,  lng: 25  },
+  '헝가리':   { lat: 47,  lng: 19  },
+  '홍콩':     { lat: 22,  lng: 114 },
 };
 module.exports = { ITEMS, EXTRA_COORDS };
