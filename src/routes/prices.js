@@ -17,7 +17,7 @@ const TICKERS = {
   soy:        'ZS=F',
   cotton:     'CT=F',
   rubber:     null,
-  semi:       'SOX',
+  semi:       '^SOX',
   car:        null,
   battery:    'LIT',
   steel:      'SLX',
