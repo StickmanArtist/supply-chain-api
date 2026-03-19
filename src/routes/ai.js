@@ -35,30 +35,15 @@ router.post('/analyze', async (req, res) => {
     );
 
     const data = response.data;
+    if (data.error) return res.status(500).json({ error: data.error.message });
 
-    if (data.error) {
-      console.error('Anthropic API 오류:', data.error);
-      return res.status(500).json({ error: data.error.message });
-    }
-
-    const text = data.content
-      ?.filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('') || '';
-
-    console.log('AI 응답 원문:', text.slice(0, 300));
-
+    const text = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || '';
     const match = text.match(/\{[\s\S]*\}/);
-    if (!match) {
-      console.error('JSON 없음. 전체 응답:', text);
-      return res.status(500).json({ error: 'JSON 파싱 실패' });
-    }
+    if (!match) return res.status(500).json({ error: 'JSON 파싱 실패' });
 
-    const result = JSON.parse(match[0]);
-    res.json(result);
-
+    res.json(JSON.parse(match[0]));
   } catch (err) {
-    console.error('AI 오류 상세:', err.response?.data || err.message);
+    console.error('AI 오류:', err.response?.data || err.message);
     res.status(500).json({ error: err.message });
   }
 });
