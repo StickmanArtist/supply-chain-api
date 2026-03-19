@@ -1,11 +1,6 @@
+// check.js 교체
 require('dotenv').config();
 const { Pool } = require('pg');
-
-const localPool = new Pool({
-  host: 'localhost', port: 5432,
-  database: 'supply_chain', user: 'postgres',
-  password: process.env.DB_PASSWORD,
-});
 
 const railPool = new Pool({
   host:     process.env.RAILWAY_DB_HOST,
@@ -17,19 +12,14 @@ const railPool = new Pool({
 });
 
 async function check() {
-  const local = await localPool.query('SELECT COUNT(*) FROM country_stats');
-  console.log('로컬 country_stats:', local.rows[0].count);
-
-  const rail = await railPool.query('SELECT COUNT(*) FROM country_stats');
-  console.log('Railway country_stats:', rail.rows[0].count);
-
-  const localF = await localPool.query('SELECT COUNT(*) FROM trade_flows');
-  console.log('로컬 trade_flows:', localF.rows[0].count);
-
-  const railF = await railPool.query('SELECT COUNT(*) FROM trade_flows');
-  console.log('Railway trade_flows:', railF.rows[0].count);
-
-  localPool.end();
+  const result = await railPool.query(
+    `SELECT commodity_id, COUNT(*) as cnt 
+     FROM country_stats 
+     GROUP BY commodity_id 
+     ORDER BY commodity_id`
+  );
+  console.log('품목별 국가 수:');
+  result.rows.forEach(r => console.log(`  ${r.commodity_id}: ${r.cnt}개`));
   railPool.end();
 }
 

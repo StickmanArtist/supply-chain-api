@@ -46,13 +46,13 @@ router.get('/:id', async (req, res) => {
     // 수급 데이터에 수입/수출 흐름 합치기
 const regions = stats.rows.map(r => {
   const imports = flows.rows
-    .filter(f => f.to_country === r.country)
+    .filter(f => f.to_country === r.name && (!f.flow_type || f.flow_type === 'import'))
     .map(f => ({ from: f.from_country, pct: f.pct }));
   const exports = flows.rows
-    .filter(f => f.from_country === r.country)
+    .filter(f => f.from_country === r.name && f.flow_type === 'export')
     .map(f => ({ to: f.to_country, pct: f.pct }));
   return {
-    name: r.country,        // ← country → name 으로 변환
+    name: r.name,
     lat: parseFloat(r.lat),
     lng: parseFloat(r.lng),
     prod: parseFloat(r.prod),
