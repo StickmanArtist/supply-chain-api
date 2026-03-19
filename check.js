@@ -1,8 +1,7 @@
-// check.js 교체
 require('dotenv').config();
 const { Pool } = require('pg');
 
-const railPool = new Pool({
+const pool = new Pool({
   host:     process.env.RAILWAY_DB_HOST,
   port:     process.env.RAILWAY_DB_PORT,
   database: process.env.RAILWAY_DB_NAME,
@@ -12,15 +11,16 @@ const railPool = new Pool({
 });
 
 async function check() {
-  const result = await railPool.query(
-    `SELECT commodity_id, COUNT(*) as cnt 
-     FROM country_stats 
-     GROUP BY commodity_id 
-     ORDER BY commodity_id`
-  );
-  console.log('품목별 국가 수:');
-  result.rows.forEach(r => console.log(`  ${r.commodity_id}: ${r.cnt}개`));
-  railPool.end();
+  const result = await pool.query(`
+    SELECT from_country, to_country, share_pct, flow_type
+    FROM trade_flows
+    WHERE commodity_id = 'oil' AND flow_type = 'export'
+    AND from_country = '사우디아라비아'
+    ORDER BY share_pct DESC
+  `);
+  console.log('사우디 수출 데이터:');
+  result.rows.forEach(r => console.log(`  ${r.from_country} → ${r.to_country}: ${r.share_pct}% (${r.flow_type})`));
+  pool.end();
 }
 
 check();
