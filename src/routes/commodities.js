@@ -30,6 +30,7 @@ router.get('/:id', async (req, res) => {
       'SELECT country, lat, lng, production AS prod, consumption AS cons FROM country_stats WHERE commodity_id = $1',
       [id]
     );
+    console.log(`${id} 국가 수:`, stats.rows.length);
 
     // 무역 흐름
     const flows = await pool.query(
