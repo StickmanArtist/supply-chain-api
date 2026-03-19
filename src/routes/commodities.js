@@ -33,10 +33,10 @@ router.get('/:id', async (req, res) => {
     console.log(`${id} 국가 수:`, stats.rows.length);
 
     // 무역 흐름
-    const flows = await pool.query(
-      'SELECT from_country, to_country, share_pct AS pct FROM trade_flows WHERE commodity_id = $1',
-      [id]
-    );
+const flows = await pool.query(
+  'SELECT from_country, to_country, share_pct AS pct, flow_type FROM trade_flows WHERE commodity_id = $1 ORDER BY share_pct DESC',
+  [id]
+);
 
     // 기업
     const companies = await pool.query(
